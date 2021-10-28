@@ -95,4 +95,90 @@
 - Em cada rede a **MAC layer frame** é composta por um campo **header** e por um campo **data**.
 - No campo **data** do MAC é encapsulado o **IP Datagram**.
 
-> Continuar na página 10
+### Formato
+
+- **IP Header**
+  - Tem um tamanho total de **20 bytes**
+  - Os últimos dois campos obrigatório conteem o **IP origem** e o **IP destino**
+  - Campos:
+    - **Version (4 bits)**: versão do protocolo de IP
+    - **Header length (4 bits)**: tamanho do header em múltiplos de 4 bytes
+    - **Service type (1 byte)**: tipo de serviço do datagram de IP (default é 0x00)
+    - **Total length (2 bytes)**: tamanho do datagram de IP (header + data), o tamanho tem sempre de ser menor que o **MTU** do MAC layer frame onde vai ser encapsulado
+  - **Identificação (2 bytes)**: o valor atribuido ao host original do IP datagram
+  - **Flags (3 bits)**:
+    - 1 bit é reservado para uso futuro
+    - **2 bit** é o **do not fragment bit**, e está a **1** se a **origem não permite** que o datagram de IP seja **fragmentado**
+    - **3 bit** é o **last fragment bit**, irá estar a **0** se o IP datagram onde se encontra for o **último fragmento** de um IP datagram
+  - **Fragment Offset (13 bits)**: posição (em multiplos de 8 bytes) deste fragmento no fragmento original do IP datagram. Este campo indica quantos bytes estão na totalidade dos fragmentos anteriores
+  - **Time to Live (1 byte)**: Representa o número de **hops maximos** que este pacote (IP datagram) pode dar entre routers **antes de ser descartado**. **Cada router** por onde passa **subtrai 1** a este valor
+  - **Protocol (1 byte)**: especifica a camada de protocolo mais alta a que o data field pertence
+  - **Header Checksum (2 bytes)**: resultado da soma (em words de 16 bits) dos outros campos do header, permite detetar erros á chegada 
+- **MTU** - *Maximum Transmission Unit* - é o tamanho máximo do data field to MAC layers frame
+
+---
+
+## ARP - Address Resolution Protocol
+
+- Tecnologias diferentes têm diferentes adereços, o standartizado pela IEEE é cada endereço tem **6 bytes**
+- Fabricantes codificam esses endereços unicos nos **NIC's** (Network Interface Card)
+- Para um host enviar um pacote a outro, o origem tem de codificar no header o **MAC address** próprio e do destino, para isso, o **origem envia** um pacote **ARP Request** a todos os hosts a pedir o MAC address do host com o endereço IP conhecido. Se estes host estiver ativo, irá **responder ao ARP Request**.
+- O mapeamento entre **MAC e IP** descobertos pelo protocolo ARP são **temporariamente guardados**.
+
+### ARP Request
+
+- Pacotes ARP são **encapsulados** em MAC layer frames.
+- O pacote **ARP Request** especifica:
+  - **MAC address origem** e **IP origem**
+  - **IP destino**
+  - Campo para **MAC destino** vazio
+
+### ARP Response
+- Especifica:
+  - O seu **MAC address** e o seu **IP**
+  - O **MAC address destino** e o seu **IP**
+
+---
+
+## Do host origem ao primeiro router
+
+Quando um host IP tem um pacote IP para um destinatario IP, o host compara os **netid** do destinatário como o seu, se forem **diferentes**, o host sabe que não estão localizados na mesma rede e **envia** o pacote para a **Default Gateway**.
+
+Pata ter conectividade global, um host IP tem de ter configurado o **IP da sua Default Gateway**. Este adereço tem de estar atribuido a uma interface network de um router connectado rede do host.
+
+---
+
+## IP Routing
+
+Os routers são responsáveis por **encaminhar os pacotes** (IP datagrams) pelas redes até ao host de destino.
+
+Para conseguir isso, cada router cria uma **tabela** que corresponde **cada porta** sua de saida para **um endereço de destino**.
+
+A tabela que o router cria tem o seguinte formato
+
+| Destino | Máscara | next hop | interface |
+| --- | --- | --- | --- |
+| 30.0.0.0 | 255.0.0.0 | 40.0.0.7 | 1 |
+| 192.4.10.0 | 255.255.255.0 | 128.1.0.9 | 2 |
+| ... |
+
+- A rede de destino é definida pelo **IP destino e pela netmask**
+- A *interface* especifica o porto de saída associado a esse IP
+- No *next hop* é especificado o endereço IP do proxímo router
+- Se a rede de destino está diretamente ligada ao router, o IP do next hop é omitido
+
+### Passos para a transmissão de pacotes entre host origem e destino
+1. Se necessário, o host **origem** descobre, atraves de **ARP** o endereço **MAC** da sua **Default Gateway**
+2. O pacote IP é encapsulado na **MAC layer frame** e é enviado para a rede
+3. O que cada router até ao destino deve fazer:
+    - **Desencapsula** o pacote IP do **MAC layer frame** recebido
+    - Procura na sua **tabela de routing** a **porta** e o **next hop IP** de saida associados ao **IP destino**
+    - Se necessário, envia **ARP Request** para descobrir o **MAC address** do próximo router
+    - O pacote IP é novamente encapsulado num MAC layer frame, mas agora com o MAC address do próximo router
+4. O último router:
+    - Desencapsula o pacote IP do MAC layer frame recebido
+    - Procura na **tabela de routing**  a porta associada ao host destinatário ligado a sua rede
+    - Se necessário envia ARP Request
+    - Encapsula novamente o pacote IP num MAC layer address com o MAC address do host destino 
+
+> Continuar na página 24 Part_1
