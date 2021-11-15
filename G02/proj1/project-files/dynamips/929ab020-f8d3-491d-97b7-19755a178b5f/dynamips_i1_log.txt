@@ -1,0 +1,33 @@
+Nov 15 14:08:47.241 HYPERVISOR: Release 0.2.14-amd64/Linux (tag 2014092320)
+Nov 15 14:08:47.241 HYPERVISOR: Started on IP = 127.0.0.1, TCP port = 33419.
+Nov 15 14:08:47.251 HYPERVISOR: exec_cmd: hypervisor version 
+Nov 15 14:08:47.252 HYPERVISOR: exec_cmd: hypervisor working_dir /home/user66/Documents/RC1/G02/proj1/project-files/dynamips 
+Nov 15 14:08:47.252 GENERAL: working_dir=/home/user66/Documents/RC1/G02/proj1/project-files/dynamips
+Nov 15 14:08:47.254 HYPERVISOR: exec_cmd: hypervisor working_dir /home/user66/Documents/RC1/G02/proj1/project-files/dynamips/9477a70b-ffcf-48a3-9bc3-6ed3eeb4875e 
+Nov 15 14:08:47.254 GENERAL: working_dir=/home/user66/Documents/RC1/G02/proj1/project-files/dynamips/9477a70b-ffcf-48a3-9bc3-6ed3eeb4875e
+Nov 15 14:08:47.254 HYPERVISOR: exec_cmd: vm create R1 1 c7200 
+Nov 15 14:08:47.255 VM: VM R1 created.
+Nov 15 14:08:47.256 HYPERVISOR: exec_cmd: vm set_con_tcp_port R1 5004 
+Nov 15 14:08:47.257 HYPERVISOR: exec_cmd: c7200 get_mac_addr R1 
+Nov 15 14:08:47.257 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 15 14:08:47.258 HYPERVISOR: exec_cmd: vm slot_add_binding R1 0 0 C7200-IO-FE 
+Nov 15 14:08:47.259 HYPERVISOR: exec_cmd: vm set_disk0 R1 0 
+Nov 15 14:08:47.260 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 15 14:08:47.261 HYPERVISOR: exec_cmd: vm set_idle_pc R1 0x60792d4c 
+Nov 15 14:08:47.263 HYPERVISOR: exec_cmd: vm set_ios R1 /home/user66/GNS3/images/IOS/c7200-jk9o3s-mz.123-8.T.bin 
+Nov 15 14:08:47.264 HYPERVISOR: exec_cmd: c7200 set_mac_addr R1 ca01.4298.0000 
+Nov 15 14:08:47.265 HYPERVISOR: exec_cmd: vm set_nvram R1 512 
+Nov 15 14:08:47.266 HYPERVISOR: exec_cmd: vm set_ram R1 512 
+Nov 15 14:08:47.267 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 15 14:08:47.267 HYPERVISOR: exec_cmd: vm slot_add_binding R1 1 0 PA-2FE-TX 
+Nov 15 14:10:02.408 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 15 14:10:02.410 HYPERVISOR: exec_cmd: vm extract_config R1 
+Nov 15 14:10:05.816 HYPERVISOR: exec_cmd: vm set_ios R1 /home/user66/GNS3/images/IOS/c7200-jk9o3s-mz.123-8.T.bin 
+Nov 15 14:10:05.915 HYPERVISOR: exec_cmd: vm set_ios R1 /home/user66/GNS3/images/IOS/c7200-jk9o3s-mz.123-8.T.bin 
+Nov 15 14:10:11.291 HYPERVISOR: exec_cmd: vm get_status R1 
+Nov 15 14:10:11.292 HYPERVISOR: exec_cmd: vm extract_config R1 
+Nov 15 14:10:11.292 HYPERVISOR: exec_cmd: vm delete R1 
+Nov 15 14:10:11.292 VM: VM R1 destroyed.
+Nov 15 14:10:11.293 HYPERVISOR: exec_cmd: hypervisor stop 
+Nov 15 14:10:11.342 HYPERVISOR: Stopped.
+Nov 15 14:10:11.342 GENERAL: reset done.
