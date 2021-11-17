@@ -49,7 +49,6 @@
 [^2]: Nunca é endereço origem válido
 [^3]: Nunca deve aparecer na rede
 [^4]: Reservado para designar a rede
----
 
 ## Notação em decimal e gamas
 
@@ -70,7 +69,7 @@
 - Os 1s definem o **netid** e os 0s o **hostid**
 - Para alem de dar possibilidade de escolher o tamanho do netid e do hostid, cada host usa a máscara para determinar o IP da subnet onde está ligado, fazendo um **bitwise AND entre o IP e a máscara**.
 
----
+<br>
 
 ## Atribuição de endereços IP
 
@@ -85,7 +84,7 @@
 - **Multi-homed host**: host com mais que uma inteface, mas estas não são capazes de trocar informação entre si;
 - **Router**: São como os multi-homed hosts, mas estas conseguem trocar informação entre interfaces.
 
----
+<br>
 
 ## Encapsulamento de IP Datagrams
 
@@ -116,7 +115,16 @@
   - **Header Checksum (2 bytes)**: resultado da soma (em words de 16 bits) dos outros campos do header, permite detetar erros á chegada 
 - **MTU** - *Maximum Transmission Unit* - é o tamanho máximo do data field to MAC layers frame
 
----
+### Fragmentação e reassemblagem em IP
+
+Acontece que o IP datagram for **maior que o MTU** da rede, o pacote terá de ser fragmentado, isto poderá ser feito pelo **host ou pelo router**
+
+1. O campo do **data** é segmentado de forma a que os seus blocos **mais o header** não seja maior que o **MTU**. Cada bloco mais um header vai formar um IP datagram
+2. O campo de **identificação** dso blocos será igual entre todos
+3. O campo de **offset** será *byte* a partir do inicio do primeiro pacotes
+4. A **flag** do ultimo pacote será **1** para identificar que é o **ultimo**, todos os outros a flag será **0**
+
+<br>
 
 ## ARP - Address Resolution Protocol
 
@@ -138,15 +146,44 @@
   - O seu **MAC address** e o seu **IP**
   - O **MAC address destino** e o seu **IP**
 
----
+<br>
+
+## Switching
+
+- Ligações de estações sem colisões
+- Largura de banda agregada não é limitada pela taxa de transmissão das portas
+
+### Tabela de Encaminhamento
+
+Cada switch contem uma tabela que identifica quais terminais estão na sua rede quais os seus dados, para depois poder enviar pacotes para esses terminais
+
+**MAC address | interface | TTL**
+
+Quando um switch **recebe** um pacote com endereço de destino **desconhecido**, o switch irá fazer **flood**, enviando o pacote a todos os sistemas na rede, e assim que o destinatário o receber e responder, o switch ai aprender os seus dados e adicioná-lo á **arp table**
+
+### Filtragem/forwarding
+
+Sequência de eventos quando uma trama é recebida por um switch
+
+1. Regista na **tabela de encaminhamento** a interface do **emissor**
+2. Procura na tabela de encominhamento uma **entrada** com o **endereço MAC** de destino
+3. if entrada encontrada {
+		if **emissor** = **destino** {
+			descarta a trama
+		}else{
+			**Forwarding**
+		}
+	}else{
+		**Flooding**
+	}
+
+<br>
 
 ## Do host origem ao primeiro router
 
 Quando um host IP tem um pacote IP para um destinatario IP, o host compara os **netid** do destinatário como o seu, se forem **diferentes**, o host sabe que não estão localizados na mesma rede e **envia** o pacote para a **Default Gateway**.
 
 Pata ter conectividade global, um host IP tem de ter configurado o **IP da sua Default Gateway**. Este adereço tem de estar atribuido a uma interface network de um router connectado rede do host.
-
----
 
 ## IP Routing
 
@@ -181,4 +218,73 @@ A tabela que o router cria tem o seguinte formato
     - Se necessário envia ARP Request
     - Encapsula novamente o pacote IP num MAC layer address com o MAC address do host destino 
 
-> Continuar na página 24 Part_1
+<br>
+
+## ICMP
+
+- Permite a troca de mensagens de controlo e diagonóstico
+- Os pacotes ICMP são **encapsulados** em **pacotes IP**
+  - Os primeiros 3 campos são comuns a todos os pacotes ICMP
+    - **type** (1 byte)
+    - **code** (1 byte)
+    - **chekcsum** (2 bytes)  
+- O campo *Checksum* é determinado com base em toda a mensagem
+
+### Tipos de mensagens ICMP
+
+| Campo type | Significado |
+|:---:|:---:|
+|0|Echo reply|
+|3|Destination unreachable|
+|4|Source quench|
+|5|Redirect|
+|8|Echo request|
+|11|Time exceeded|
+|12|Parameter problem
+|13|Timestamp request
+|14|Timestramp reply|
+
+### ICMP Redirect
+
+Quando um router deteta que uma estação esta a usar uma rota que não é a melhor, envia uma mensagem **ICMP Redirect* para que ele mude de rota
+
+O router inicial, para além do **ICMP Redirect**, envia também o datagrama original para o destino
+
+Não possibilita mudanças de **rotas entre routers**; apenas entre um host e um router na mesma rede
+
+O campo **code** é usado para passar mais informação
+- **0** - Datagrama de redirect para a **rede**
+- **1** - Datagrama de redirect para o **host**
+- **2** - Datagrama de redirect para **Type of Service** e para **rede**
+- **3** - Datagrama de redirect para **Type of Service** e para **host**
+
+### ICMP Destination Unreachable
+
+Existem **6** valores possiveis para o campo **code**
+
+- **0** - **Net Unreachable** - enviado pelo router se este não sober a rota para a rede pedida
+- **1** - **Host Unreachable** - enviado pelo router quando sabe a rota mas não o host
+- **2** - **Protocol Unreachable** - enviado pelo host destino, se o protocolo destino não funcionar
+- **3** - **Port Unreachable** - enviado pelo host destino, se a porta estiver ""vazia"
+- **4** - **Cannot Fragment** - enviado pelo router, se for necessário fragmentar, mas o bit "do not fragment" estiver a 1
+- **5** - **Source Route Failed** - o IP Source routing é um dos IP Header Options
+
+### ICMP Time Exceeded message
+
+É enviado por um **router** para a **origem** quando o **TTL** do pacote chega a **0**
+
+#### Comando Tracert
+
+Permite descobrir o percurso utilizado no encaminhamento dos pacotes
+
+Recorre ao campo **TTL** e a mensagens **ICMP Time Exceeded**
+
+Envia ICMP Echo requests, 3 de cada vez, com **TTL** inicial de **1**, e incrementa gradualmente **TTL+=1**, sempre que a resposta for **Time exceeded** é descoberto um novo **router**, isto é repetido **ate deixar de receber** a mensagem de **Time exceeded**
+
+<br>
+
+## Subredes
+
+Uma **subereds** é um **subconjunto de uma rede** de classe A, B ou C
+
+A utilização de **máscaras, permite que uma rede seja dividida** em subredes estendendo a parte da rede à parte de **host do endereço IP**; esta técnica aumenta o número de resdes e reduz o número de hosts
