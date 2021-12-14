@@ -1,0 +1,66 @@
+Dec 07 20:08:55.251 HYPERVISOR: Release 0.2.17-x86/Windows (tag 2017072410)
+Dec 07 20:08:55.252 HYPERVISOR: Started on IP = localhost, TCP port = 50558.
+Dec 07 20:08:55.761 HYPERVISOR: exec_cmd: hypervisor version 
+Dec 07 20:08:55.761 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\david\Desktop\projeto_1\project-files\dynamips 
+Dec 07 20:08:55.761 GENERAL: working_dir=C:\Users\david\Desktop\projeto_1\project-files\dynamips
+Dec 07 20:08:55.762 HYPERVISOR: exec_cmd: hypervisor working_dir C:\Users\david\Desktop\projeto_1\project-files\dynamips\ecd5ca6b-2120-4a52-8558-6e11672c19a3 
+Dec 07 20:08:55.763 GENERAL: working_dir=C:\Users\david\Desktop\projeto_1\project-files\dynamips\ecd5ca6b-2120-4a52-8558-6e11672c19a3
+Dec 07 20:08:55.763 HYPERVISOR: exec_cmd: vm create ISP 3 c7200 
+Dec 07 20:08:55.764 VM: VM ISP created.
+Dec 07 20:08:55.764 HYPERVISOR: exec_cmd: vm set_con_tcp_port ISP 5009 
+Dec 07 20:08:55.764 HYPERVISOR: exec_cmd: c7200 get_mac_addr ISP 
+Dec 07 20:08:55.764 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:08:55.764 HYPERVISOR: exec_cmd: vm slot_add_binding ISP 0 0 C7200-IO-FE 
+Dec 07 20:08:55.764 HYPERVISOR: exec_cmd: vm set_disk0 ISP 0 
+Dec 07 20:08:55.765 HYPERVISOR: exec_cmd: vm set_exec_area ISP 64 
+Dec 07 20:08:55.765 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:08:55.765 HYPERVISOR: exec_cmd: vm set_idle_pc ISP 0x601712a8 
+Dec 07 20:08:55.765 HYPERVISOR: exec_cmd: vm set_ios ISP C:/Users/david/Documents/Universidade/1Sem2021_22_Repos/RC1/GNS3 Images/IOS/c7200-jk9o3s-mz.123-8.T.image 
+Dec 07 20:08:55.766 HYPERVISOR: exec_cmd: c7200 set_mac_addr ISP ca03.4354.0000 
+Dec 07 20:08:55.766 HYPERVISOR: exec_cmd: vm set_nvram ISP 512 
+Dec 07 20:08:55.766 HYPERVISOR: exec_cmd: vm set_ram ISP 512 
+Dec 07 20:08:55.766 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:08:55.767 HYPERVISOR: exec_cmd: vm slot_remove_binding ISP 0 0 
+Dec 07 20:08:55.767 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:08:55.767 HYPERVISOR: exec_cmd: vm slot_add_binding ISP 0 0 C7200-IO-2FE 
+Dec 07 20:08:55.767 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:08:55.767 HYPERVISOR: exec_cmd: vm slot_add_binding ISP 1 0 PA-2FE-TX 
+Dec 07 20:08:56.532 HYPERVISOR: exec_cmd: nio create_udp udp-507c311e-fb66-4960-91a1-42755829e6f1 10018 127.0.0.1 10019 
+Dec 07 20:08:56.778 HYPERVISOR: exec_cmd: vm slot_add_nio_binding ISP 0 0 udp-507c311e-fb66-4960-91a1-42755829e6f1 
+Dec 07 20:08:56.778 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:08:56.814 HYPERVISOR: exec_cmd: nio create_udp udp-110478ae-8f99-4731-9253-2ad0a00bf38d 10022 127.0.0.1 10023 
+Dec 07 20:08:56.815 HYPERVISOR: exec_cmd: vm slot_add_nio_binding ISP 0 1 udp-110478ae-8f99-4731-9253-2ad0a00bf38d 
+Dec 07 20:08:56.816 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:12:47.113 HYPERVISOR: exec_cmd: vm set_ghost_status ISP 2 
+Dec 07 20:12:47.113 HYPERVISOR: exec_cmd: vm set_ghost_file ISP C:\Users\david\Desktop\projeto_1\project-files\dynamips\c7200-jk9o3s-mz.123-8.T.image-512.ghost 
+Dec 07 20:12:47.113 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:12:47.114 HYPERVISOR: exec_cmd: vm set_config ISP configs\i3_startup-config.cfg configs\i3_private-config.cfg 
+Dec 07 20:12:47.114 HYPERVISOR: exec_cmd: vm start ISP 
+Dec 07 20:13:17.439 HYPERVISOR: exec_cmd: vm extract_config ISP 
+Dec 07 20:16:46.250 HYPERVISOR: exec_cmd: vm set_ghost_status ISP 2 
+Dec 07 20:16:46.251 HYPERVISOR: exec_cmd: vm set_ghost_file ISP C:\Users\david\Desktop\projeto_1\project-files\dynamips\c7200-jk9o3s-mz.123-8.T.image-512.ghost 
+Dec 07 20:16:46.251 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:47:22.414 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:47:22.414 HYPERVISOR: exec_cmd: vm stop ISP 
+Dec 07 20:47:22.550 VM: VM ISP shutdown.
+Dec 07 20:47:22.550 HYPERVISOR: exec_cmd: vm extract_config ISP 
+Dec 07 20:47:29.748 HYPERVISOR: exec_cmd: vm set_ghost_status ISP 2 
+Dec 07 20:47:29.748 HYPERVISOR: exec_cmd: vm set_ghost_file ISP C:\Users\david\Desktop\projeto_1\project-files\dynamips\c7200-jk9o3s-mz.123-8.T.image-512.ghost 
+Dec 07 20:47:29.748 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 07 20:47:29.748 HYPERVISOR: exec_cmd: vm set_config ISP configs\i3_startup-config.cfg configs\i3_private-config.cfg 
+Dec 07 20:47:29.748 HYPERVISOR: exec_cmd: vm start ISP 
+Dec 07 21:22:00.686 HYPERVISOR: exec_cmd: vm extract_config ISP 
+Dec 07 21:22:30.678 HYPERVISOR: exec_cmd: vm extract_config ISP 
+Dec 08 01:30:40.717 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 08 01:30:40.718 HYPERVISOR: exec_cmd: vm stop ISP 
+Dec 08 01:30:40.895 VM: VM ISP shutdown.
+Dec 08 01:30:40.896 HYPERVISOR: exec_cmd: vm extract_config ISP 
+Dec 08 01:30:44.061 HYPERVISOR: exec_cmd: vm set_ghost_status ISP 2 
+Dec 08 01:30:44.062 HYPERVISOR: exec_cmd: vm set_ghost_file ISP C:\Users\david\Desktop\projeto_1\project-files\dynamips\c7200-jk9o3s-mz.123-8.T.image-512.ghost 
+Dec 08 01:30:44.062 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 08 01:30:44.063 HYPERVISOR: exec_cmd: vm set_config ISP configs\i3_startup-config.cfg configs\i3_private-config.cfg 
+Dec 08 01:30:44.063 HYPERVISOR: exec_cmd: vm start ISP 
+Dec 08 01:58:04.470 HYPERVISOR: exec_cmd: vm get_status ISP 
+Dec 08 01:58:04.470 HYPERVISOR: exec_cmd: vm stop ISP 
+Dec 08 01:58:04.631 VM: VM ISP shutdown.
+Dec 08 01:58:04.631 HYPERVISOR: exec_cmd: vm extract_config ISP 

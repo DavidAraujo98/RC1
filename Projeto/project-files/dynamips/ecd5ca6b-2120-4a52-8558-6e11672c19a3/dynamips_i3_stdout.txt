@@ -1,0 +1,1 @@
+vm_mmap_open_file: unable to open file 'c7200_i2_nvram' (No such file or directory)
